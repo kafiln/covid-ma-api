@@ -1,0 +1,3 @@
+[submodule "morocco-covid-stats"]
+	path = morocco-covid-stats
+	url = https://github.com/Kafiil/morocco-covid-stats
