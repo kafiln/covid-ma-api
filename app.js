@@ -1,13 +1,15 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const mongoose = require('mongoose')
-const app = express()
-const routes = require('./routes')
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const cron = require('node-cron');
+const app = express();
+const routes = require('./routes');
+const job = require('./cron');
 
 // Middlewares
-app.use(cors())
-app.use(express.urlencoded({ extended: false }))
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
 
 // Connect to db
 mongoose
@@ -17,10 +19,16 @@ mongoose
     useCreateIndex: true,
   })
   .then(console.log('Connected to MongoDb Successfully'))
-  .catch(console.error)
+  .catch(console.error);
 
 // Routes
 
-app.use('/api', routes)
+app.use('/api', routes);
 
-module.exports = app
+// Cron
+
+cron.schedule(process.env.CRON_FREQUENCY, async () => {
+  await job();
+});
+
+module.exports = app;

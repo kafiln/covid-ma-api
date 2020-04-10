@@ -1,14 +1,9 @@
 const router = require('express').Router();
-const Statistic = require('../models/Statistic');
+const repo = require('../repositories/statisticsRepository');
 
 router.get('/', async (req, res) => {
   try {
-    const mostUpdated = await Statistic.findOne(
-      {},
-      {},
-      { sort: { created_at: -1 } }
-    );
-
+    const mostUpdated = await repo.getLastStatistic();
     if (!mostUpdated) {
       return res.status(404).json({ error: true, message: 'Not Found' });
     }
