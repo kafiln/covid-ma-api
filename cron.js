@@ -1,15 +1,16 @@
-const { all } = require('./scrapper');
+const getStats = require('covid-ma');
 const repo = require('./repositories/statisticsRepository');
 
 const job = async () => {
   console.log('Starting the job at', new Date().toString());
-  const newData = await all();
+  const newData = await getStats();
+  console.log(newData);
 
   const mostUptoDate = await repo.getLastStatistics();
   const noNeedToSave =
     mostUptoDate &&
-    new Date(newData.lastUpdate).toString() ===
-      new Date(mostUptoDate.lastUpdate).toString();
+    new Date(newData.lastUpdate).getTime() ===
+      new Date(mostUptoDate.lastUpdate).getTime();
 
   if (noNeedToSave) {
     console.log('No new data');
@@ -17,7 +18,7 @@ const job = async () => {
   } else {
     // New data 🎉🎉
     const newRecord = await repo.save(newData);
-    console.log('new record saved in db');
+    console.log('new record saved in db', newRecord);
   }
 };
 
