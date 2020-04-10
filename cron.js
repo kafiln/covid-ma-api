@@ -1,11 +1,11 @@
-const { all } = require('./morocco-covid-stats');
+const { all } = require('./scrapper');
 const repo = require('./repositories/statisticsRepository');
 
 const job = async () => {
   console.log('Starting the job at', new Date().toString());
   const newData = await all();
 
-  const mostUptoDate = await repo.getLastStatistic();
+  const mostUptoDate = await repo.getLastStatistics();
   const noNeedToSave =
     mostUptoDate &&
     new Date(newData.lastUpdate).toString() ===
@@ -16,8 +16,7 @@ const job = async () => {
     console.log('Retrying later');
   } else {
     // New data 🎉🎉
-    const newRecord = new Statistic(newData);
-    const result = await newRecord.save();
+    const newRecord = await repo.save(newData);
     console.log('new record saved in db');
   }
 };

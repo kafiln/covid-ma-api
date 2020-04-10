@@ -3,7 +3,7 @@ const repo = require('../repositories/statisticsRepository');
 
 router.get('/', async (req, res) => {
   try {
-    const mostUpdated = await repo.getLastStatistic();
+    const mostUpdated = await repo.getLastStatistics();
     if (!mostUpdated) {
       return res.status(404).json({ error: true, message: 'Not Found' });
     }
