@@ -28,11 +28,9 @@ const transformData = (actual, old) => ({
   recovered: transformField(actual.recovered, old.recovered),
   confirmed: transformField(actual.confirmed, old.confirmed),
   negatives: transformField(actual.negatives, old.negatives),
-  tested: transformField(
-    actual.negatives + actual.confirmed,
-    old.negatives + old.confirmed
-  ),
-  actif: transformField(
+  tested: transformField(actual.tested, old.tested),
+  //TODO: Refactor this (include calculation in lib and persist in db)
+  actives: transformField(
     actual.confirmed - actual.deaths - actual.recovered,
     old.confirmed - old.deaths - old.recovered
   ),
