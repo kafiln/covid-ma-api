@@ -4,7 +4,6 @@ const repo = require('./repositories/statisticsRepository');
 const job = async () => {
   console.log('Starting the job at', new Date().toString());
   const newData = await getStats();
-  console.log(newData);
 
   const mostUptoDate = await repo.getLastStatistics();
   const noNeedToSave =
@@ -17,6 +16,7 @@ const job = async () => {
     console.log('Retrying later');
   } else {
     // New data 🎉🎉
+    console.log('New data 🎉🎉');
     const newRecord = await repo.save(newData);
     console.log('new record saved in db', newRecord);
   }
