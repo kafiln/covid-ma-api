@@ -8,6 +8,7 @@ const statisticSchema = new Schema(
     confirmed: Number,
     negatives: Number,
     tested: Number,
+    actives: Number,
     regions: [
       {
         name: String,

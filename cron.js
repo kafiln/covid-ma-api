@@ -1,15 +1,18 @@
 const getStats = require('covid-ma');
 const repo = require('./repositories/statisticsRepository');
+require('dotenv').config();
 
 const job = async () => {
+  const config = {
+    timeOffset: process.env.TIME_OFFSET,
+  };
   console.log('Starting the job at', new Date().toString());
-  const newData = await getStats();
+  console.log('Overriding default config with', config);
+
+  const newData = await getStats({ config });
 
   const mostUptoDate = await repo.getLastStatistics();
-  const noNeedToSave =
-    mostUptoDate &&
-    new Date(newData.lastUpdate).getTime() ===
-      new Date(mostUptoDate.lastUpdate).getTime();
+  const noNeedToSave = mostUptoDate && newData.tested === mostUptoDate.tested;
 
   if (noNeedToSave) {
     console.log('No new data');
