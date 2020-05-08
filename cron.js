@@ -12,6 +12,7 @@ const job = async () => {
   const newData = await getStats({ config });
 
   const mostUptoDate = await repo.getLastStatistics();
+  console.log(mostUptoDate);
   const noNeedToSave = mostUptoDate && newData.tested === mostUptoDate.tested;
 
   if (noNeedToSave) {
