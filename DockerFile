@@ -8,6 +8,11 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
+ENV DATABASE_URL mongodb://root:root1234@ds111066.mlab.com:11066/covid
+ENV TIME_OFFSET "+0000"
+ENV CRON_FREQUENCY "0/15 * * * * *"
+ENV PORT 5000
+
 RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
@@ -15,5 +20,5 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE ${PORT}
 CMD [ "node", "index.js" ]
