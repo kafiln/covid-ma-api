@@ -9,7 +9,8 @@ const job = async () => {
   console.log('Starting the job at', new Date().toString());
   console.log('Overriding default config with', config);
 
-  const newData = await getStats({ config });
+  const newData = await getStats(config);
+  console.log(newData);
 
   const mostUptoDate = await repo.getLastStatistics();
   console.log(mostUptoDate);
