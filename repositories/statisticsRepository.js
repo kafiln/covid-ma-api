@@ -39,13 +39,13 @@ const transformData = (actual, old) => ({
   regions: mergeRegions(actual.regions, old.regions),
 });
 const getLastStatistics = () =>
-  Statistic.findOne({}, FIELDS_TO_HIDE, { sort: { createdAt: -1 } });
+  Statistic.findOne({}, FIELDS_TO_HIDE, { sort: { lastUpdate: -1 } });
 
 const save = (doc) => new Statistic(doc).save();
 
 const getTwoLast = async () => {
   return await Statistic.find({}, FIELDS_TO_HIDE, {
-    sort: { createdAt: -1 },
+    sort: { lastUpdate: -1 },
   })
     .limit(3)
     .then((data) => {
