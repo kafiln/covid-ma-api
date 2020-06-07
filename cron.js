@@ -5,6 +5,8 @@ require('dotenv').config();
 const job = async () => {
   const config = {
     timeOffset: process.env.TIME_OFFSET,
+    textNode: process.env.TEXT_NODE
+    
   };
   console.log('Starting the job at', new Date().toString());
   console.log('Overriding default config with', config);
