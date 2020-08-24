@@ -47,10 +47,9 @@ const getTwoLast = async () => {
   return await Statistic.find({}, FIELDS_TO_HIDE, {
     sort: { lastUpdate: -1 },
   })
-    .limit(3)
+    .limit(2)
     .then((data) => {
-      const actual = data[0];
-      const old = data[2];
+      const [actual, old] = data;
       return transformData(actual, old);
     });
 };
